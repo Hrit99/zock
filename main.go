@@ -17,18 +17,14 @@ type product struct {
 	Product_images            []string `json:"product_images"`
 	Product_price             float64  `json:"product_price"`
 	Compressed_product_images []string `json:"compressed_product_images"`
-	Created_at                string   `json:"created_at"`
-	Updated_at                string   `json:"updated_at"`
 }
 
 type user struct {
-	Id         int    `json:"_id"`
-	Name       string `json:"name"`
-	Mobile     string `json:"mobile"`
-	Latitude   string `json:"latitude"`
-	Longitude  string `json:"longitude"`
-	Created_at string `json:"created_at"`
-	Updated_at string `json:"updated_at"`
+	Id        int    `json:"_id"`
+	Name      string `json:"name"`
+	Mobile    string `json:"mobile"`
+	Latitude  string `json:"latitude"`
+	Longitude string `json:"longitude"`
 }
 
 var db *mongo.Database
