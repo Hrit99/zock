@@ -1,9 +1,12 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 type product struct {
@@ -28,10 +31,19 @@ type user struct {
 }
 
 func main() {
+	//env initialization
+	err := godotenv.Load("local.env")
+	if err != nil {
+		log.Fatalf("Some error occured. Err: %s", err)
+	}
+
+	port := os.Getenv("PORT")
+
+	//gin server router and handlers
 	router := gin.Default()
 	router.POST("/product", postProduct)
 
-	router.Run("localhost:8080")
+	router.Run("localhost:" + port)
 }
 
 func postProduct(c *gin.Context) {
