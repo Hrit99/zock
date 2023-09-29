@@ -2,10 +2,8 @@ package main
 
 import (
 	"log"
-	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/joho/godotenv"
 
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -30,19 +28,16 @@ type user struct {
 var db *mongo.Database
 
 func main() {
-	//env initialization
-	err := godotenv.Load("local.env")
+	//load env variables
+	err := Loadenv()
 	if err != nil {
-		log.Fatalf("Some error occured. Err: %s", err)
+		log.Fatalf("Unable to load env variables. Err: %s", err)
 	}
-
-	port := os.Getenv("PORT")
-	uri := os.Getenv("MONGO_URI")
 
 	//mongodb connection
 	db, err = ConnectDb(uri)
 	if err != nil {
-		log.Fatalf("Some error occured. Err: %s", err)
+		log.Fatalf("Unable to connect to database. Err: %s", err)
 	}
 
 	//gin server router and handlers
