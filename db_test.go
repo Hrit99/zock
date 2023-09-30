@@ -10,7 +10,7 @@ func Test_ConnectDb(t *testing.T) {
 	if result != nil {
 		t.Errorf("\"ConnectDb()\" FAILED, expected -> nil, got -> %v", result)
 	} else {
-		t.Logf("\"ConnectDb()\" FAILED, expected -> nil, got -> %v", result)
+		t.Logf("\"ConnectDb()\" PASSED, expected -> <nil>, got -> %v", result)
 	}
 
 }

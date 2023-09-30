@@ -22,8 +22,12 @@ func PostProduct(c *gin.Context) {
 		log.Fatalf("Some error occured. Err: %s", err)
 	}
 
-	//update product_id value to _id value
-	_, err = db.Collection("products").UpdateByID(context.TODO(), doc.InsertedID, bson.D{{"$set", bson.D{{"product_id", doc.InsertedID}}}})
+	//initialize product_id value
+	product_id, err := db.Collection("products").CountDocuments(context.TODO(), bson.D{})
+	if err != nil {
+		log.Fatalf("Some error occured. Err: %s", err)
+	}
+	_, err = db.Collection("products").UpdateByID(context.TODO(), doc.InsertedID, bson.D{{"$set", bson.D{{"product_id", product_id}}}})
 	if err != nil {
 		log.Fatalf("Some error occured. Err: %s", err)
 	}
