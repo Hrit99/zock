@@ -10,7 +10,7 @@ import (
 	"github.com/IBM/sarama"
 )
 
-func Produce(topic string, product_id int) {
+func Produce(product_id int) {
 	config := sarama.NewConfig()
 
 	config.Producer.Return.Successes = true
@@ -21,7 +21,7 @@ func Produce(topic string, product_id int) {
 		return
 	}
 	defer producer.Close()
-	msg := &sarama.ProducerMessage{Topic: topic, Key: nil, Value: sarama.StringEncoder(strconv.Itoa(product_id))}
+	msg := &sarama.ProducerMessage{Topic: kafkaConfig.CONST_TOPIC, Key: nil, Value: sarama.StringEncoder(strconv.Itoa(product_id))}
 	producer.Input() <- msg
 	log.Printf("product_id passed to queue: %s\n", strconv.Itoa(product_id))
 

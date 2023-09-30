@@ -24,5 +24,6 @@ func Consume(topic string) {
 	defer partitionConsumer.Close()
 	for message := range partitionConsumer.Messages() {
 		log.Printf("product_id passed value: %s\n", string(message.Value))
+
 	}
 }

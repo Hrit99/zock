@@ -41,12 +41,6 @@ func main() {
 		log.Fatalf("Unable to connect to database. Err: %s", err)
 	}
 
-	//invoke kafka producer
-	// producer, err = InvokeProducer()
-	// if err != nil {
-	// 	log.Fatalf("Unable to invoke kafka producer. Err: %s", err)
-	// }
-
 	//gin server router and handlers
 	router := gin.Default()
 	router.POST("/product", PostProduct)

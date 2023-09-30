@@ -8,7 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 
-	kafkaConfig "github.com/Hrit99/zock.git/config"
 	"github.com/Hrit99/zock.git/producer"
 )
 
@@ -37,8 +36,7 @@ func PostProduct(c *gin.Context) {
 	}
 
 	//send product_id to kafka queue
-	topic := kafkaConfig.CONST_TOPIC
-	producer.Produce(topic, int(product_id))
+	producer.Produce(int(product_id))
 
 	//send added product as response
 	c.IndentedJSON(http.StatusCreated, newProduct)
