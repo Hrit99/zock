@@ -3,18 +3,19 @@ package main
 import (
 	"log"
 
+	"github.com/Hrit99/zock.git/config"
 	"github.com/gin-gonic/gin"
 )
 
 func SetUpRouter() *gin.Engine {
 	//load env variables
-	err := Loadenv()
+	err := config.Loadenv()
 	if err != nil {
 		log.Fatalf("Unable to load env variables. Err: %s", err)
 	}
 
 	//mongodb connection
-	db, err = ConnectDb(uri)
+	db, err = ConnectDb()
 	if err != nil {
 		log.Fatalf("Unable to connect to database. Err: %s", err)
 	}

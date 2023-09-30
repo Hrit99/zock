@@ -1,4 +1,4 @@
-package main
+package config
 
 import (
 	"log"
@@ -7,8 +7,13 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var port string
-var uri string
+const (
+	CONST_HOST  = "friday:9092"
+	CONST_TOPIC = "zock-topic"
+)
+
+var Port string
+var Uri string
 
 func Loadenv() error {
 	//env initialization
@@ -18,7 +23,7 @@ func Loadenv() error {
 		return err
 	}
 
-	port = os.Getenv("PORT")
-	uri = os.Getenv("MONGO_URI")
+	Port = os.Getenv("PORT")
+	Uri = os.Getenv("MONGO_URI")
 	return nil
 }

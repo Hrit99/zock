@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/Hrit99/zock.git/config"
 	"github.com/gin-gonic/gin"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -29,19 +30,25 @@ var db *mongo.Database
 
 func main() {
 	//load env variables
-	err := Loadenv()
+	err := config.Loadenv()
 	if err != nil {
 		log.Fatalf("Unable to load env variables. Err: %s", err)
 	}
 
 	//mongodb connection
-	db, err = ConnectDb(uri)
+	db, err = ConnectDb()
 	if err != nil {
 		log.Fatalf("Unable to connect to database. Err: %s", err)
 	}
 
+	//invoke kafka producer
+	// producer, err = InvokeProducer()
+	// if err != nil {
+	// 	log.Fatalf("Unable to invoke kafka producer. Err: %s", err)
+	// }
+
 	//gin server router and handlers
 	router := gin.Default()
 	router.POST("/product", PostProduct)
-	router.Run("localhost:" + port)
+	router.Run("localhost:" + config.Port)
 }
