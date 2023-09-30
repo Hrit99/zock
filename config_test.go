@@ -14,3 +14,9 @@ func Test_Loadenv(t *testing.T) {
 	}
 
 }
+
+func Benchmark_Loadenv(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Loadenv()
+	}
+}

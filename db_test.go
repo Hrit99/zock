@@ -14,3 +14,9 @@ func Test_ConnectDb(t *testing.T) {
 	}
 
 }
+
+func Benchmark_ConnectDb(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		ConnectDb(uri)
+	}
+}
