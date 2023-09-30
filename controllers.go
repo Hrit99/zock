@@ -24,6 +24,7 @@ func PostProduct(c *gin.Context) {
 
 	//initialize product_id value
 	product_id, err := db.Collection("products").CountDocuments(context.TODO(), bson.D{})
+	newProduct.Product_id = int(product_id)
 	if err != nil {
 		log.Fatalf("Some error occured. Err: %s", err)
 	}

@@ -9,7 +9,7 @@ import (
 )
 
 type product struct {
-	Product_id                int      `json:"_id"`
+	Product_id                int      `json:"product_id"`
 	Product_name              string   `json:"product_name"`
 	Product_description       string   `json:"product_description"`
 	Product_images            []string `json:"product_images"`
@@ -18,7 +18,7 @@ type product struct {
 }
 
 type user struct {
-	Id        int    `json:"_id"`
+	Id        int    `json:"user_id"`
 	Name      string `json:"name"`
 	Mobile    string `json:"mobile"`
 	Latitude  string `json:"latitude"`
