@@ -8,7 +8,7 @@ import (
 )
 
 const (
-	CONST_HOST  = "friday:9092"
+	CONST_HOST  = "localhost:9092"
 	CONST_TOPIC = "zock-topic"
 )
 

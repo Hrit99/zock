@@ -9,6 +9,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+type postreq struct {
+	Id                  int      `json:"user_id"`
+	Product_name        string   `json:"product_name"`
+	Product_description string   `json:"product_description"`
+	Product_images      []string `json:"product_images"`
+	Product_price       float64  `json:"product_price"`
+}
+
 type product struct {
 	Product_id                int      `json:"product_id"`
 	Product_name              string   `json:"product_name"`

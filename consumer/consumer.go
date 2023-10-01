@@ -154,7 +154,7 @@ func downloadFile(URL, filePath string) error {
 		return err
 	}
 
-	//Write the bytes to the fiel
+	//Write the bytes to the file
 	_, err = file.Write(compressedImg)
 	if err != nil {
 		return err

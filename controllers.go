@@ -12,25 +12,35 @@ import (
 )
 
 func PostProduct(c *gin.Context) {
-	var newProduct product
+	var newreq postreq
 
-	if err := c.BindJSON(&newProduct); err != nil {
+	if err := c.BindJSON(&newreq); err != nil {
 		return
 	}
 
-	//add new product to db
-	doc, err := db.Collection("products").InsertOne(context.TODO(), newProduct)
+	//get unique product_id
+	product_id, err := db.Collection("products").CountDocuments(context.TODO(), bson.D{})
 	if err != nil {
 		log.Fatalf("Some error occured. Err: %s", err)
 	}
 
-	//initialize product_id value
-	product_id, err := db.Collection("products").CountDocuments(context.TODO(), bson.D{})
-	newProduct.Product_id = int(product_id)
+	//add new product to db
+	_, err = db.Collection("products").InsertOne(context.TODO(), &product{
+		Product_id:                int(product_id) + 1,
+		Product_name:              newreq.Product_name,
+		Product_description:       newreq.Product_description,
+		Product_images:            newreq.Product_images,
+		Product_price:             newreq.Product_price,
+		Compressed_product_images: []string{},
+	})
 	if err != nil {
 		log.Fatalf("Some error occured. Err: %s", err)
 	}
-	_, err = db.Collection("products").UpdateByID(context.TODO(), doc.InsertedID, bson.D{{"$set", bson.D{{"product_id", product_id}}}})
+
+	//add new user to db
+	_, err = db.Collection("users").InsertOne(context.TODO(), &user{
+		Id: newreq.Id,
+	})
 	if err != nil {
 		log.Fatalf("Some error occured. Err: %s", err)
 	}
@@ -39,5 +49,12 @@ func PostProduct(c *gin.Context) {
 	producer.Produce(int(product_id))
 
 	//send added product as response
-	c.IndentedJSON(http.StatusCreated, newProduct)
+	c.IndentedJSON(http.StatusCreated, &product{
+		Product_id:                int(product_id) + 1,
+		Product_name:              newreq.Product_name,
+		Product_description:       newreq.Product_description,
+		Product_images:            newreq.Product_images,
+		Product_price:             newreq.Product_price,
+		Compressed_product_images: []string{},
+	})
 }
