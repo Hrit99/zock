@@ -14,6 +14,7 @@ import (
 	kafkaConfig "github.com/Hrit99/zock.git/config"
 	database "github.com/Hrit99/zock.git/db"
 	"github.com/IBM/sarama"
+	"github.com/h2non/bimg"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -116,9 +117,18 @@ func downloadFile(URL, filePath string) error {
 		return err
 	}
 	defer file.Close()
+	//compress image
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return err
+	}
+	compressedImg, err := compressImage(body, 40)
+	if err != nil {
+		return err
+	}
 
 	//Write the bytes to the fiel
-	_, err = io.Copy(file, response.Body)
+	_, err = file.Write(compressedImg)
 	if err != nil {
 		return err
 	}
@@ -131,4 +141,18 @@ func createFile(p string) (*os.File, error) {
 		return nil, err
 	}
 	return os.Create(p)
+}
+
+func compressImage(buffer []byte, quality int) ([]byte, error) {
+
+	converted, err := bimg.NewImage(buffer).Convert(bimg.WEBP)
+	if err != nil {
+		return nil, err
+	}
+
+	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: quality})
+	if err != nil {
+		return nil, err
+	}
+	return processed, nil
 }
