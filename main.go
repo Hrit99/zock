@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/Hrit99/zock.git/config"
+	database "github.com/Hrit99/zock.git/db"
 	"github.com/gin-gonic/gin"
-
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -36,7 +36,7 @@ func main() {
 	}
 
 	//mongodb connection
-	db, err = ConnectDb()
+	db, err = database.ConnectDb(config.Uri)
 	if err != nil {
 		log.Fatalf("Unable to connect to database. Err: %s", err)
 	}

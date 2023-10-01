@@ -44,6 +44,7 @@ func Test_PostProduct(t *testing.T) {
 			}
 			db.Collection("products").DeleteOne(context.TODO(), bson.D{{"product_id", resProduct.Product_id}})
 		}
+
 	}()
 }
 

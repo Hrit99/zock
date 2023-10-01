@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/Hrit99/zock.git/config"
+	database "github.com/Hrit99/zock.git/db"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +16,7 @@ func SetUpRouter() *gin.Engine {
 	}
 
 	//mongodb connection
-	db, err = ConnectDb()
+	db, err = database.ConnectDb(config.Uri)
 	if err != nil {
 		log.Fatalf("Unable to connect to database. Err: %s", err)
 	}
